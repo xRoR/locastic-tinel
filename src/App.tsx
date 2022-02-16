@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import './App.css';
+import Cart from "./components/cart/Cart";
+import Checkout from "./components/checkout/Checkout";
+import { RootStore } from "./models/root-store";
+import { RootStoreProvider } from "./models/store-context";
+import { setupRootStore } from "./models/store-setup";
+import CategoryPage from './views/CategoryPage';
+import NotFound from './views/NotFound';
+import WorkshopPage from './views/WorkshopPage';
 
 function App() {
+  const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
+
+  useEffect(() => {
+    async function fetchData() {
+      setupRootStore().then(setRootStore)
+    }
+
+    fetchData()
+  }, []);
+
+  if (!rootStore) return null
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RootStoreProvider value={rootStore}>
+      <div className="App">
+        <Routes>
+          <Route index element={<CategoryPage />} />
+          <Route path="workshop/:id" element={<WorkshopPage />} />
+          <Route path="*" element={<NotFound />}/>
+        </Routes>
+        <Cart  />
+        <Checkout />
+      </div>
+    </RootStoreProvider>
   );
 }
 
