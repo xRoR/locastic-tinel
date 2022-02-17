@@ -88,7 +88,6 @@ export const CatalogStoreModel = types
       const result = await api.getOne(id);
 
       if (result.kind === 'ok') {
-        self.appendWorkshops([result.workshop]);
         return result.workshop;
       } else {
         console.log(result.kind);
