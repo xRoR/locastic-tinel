@@ -42,7 +42,7 @@ const Panel = styled(animated.div)<PanelProps>`
   width: ${({ width }: any) => width + WOBBLY_WIDTH}px;
   right: -${({ width }: any) => width + WOBBLY_WIDTH}px;
 
-  touch-action: none;
+  touch-action: pan-y;
   overflow: hidden;
   padding-right: ${WOBBLY_WIDTH + 20 * 2}px;
   box-sizing: border-box;

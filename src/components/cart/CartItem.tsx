@@ -17,7 +17,6 @@ const ItemWrapper = styled.div`
   border-radius: 6px;
   margin-bottom: 20px;
   /* overflow: hidden; */
-  touch-action: none;
 `;
 
 const ItemImage = styled.div`

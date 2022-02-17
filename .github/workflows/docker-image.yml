@@ -30,7 +30,7 @@ jobs:
         remote_host: ssh://root@tinel.xror.net
         ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
         ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
-        args: stack deploy --compose-file docker/stack.yaml tinel
+        args: stack deploy --compose-file docker/stack.yml tinel
 
       
     
