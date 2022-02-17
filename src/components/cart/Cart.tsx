@@ -167,7 +167,7 @@ const Cart: React.FC<{
     isOpened ? open() : close();
   }, [isOpened, open, close]);
 
-  useScrollLock(withScrollLock  ? isOpened : false);
+  useScrollLock(isMobile ? true : (withScrollLock  ? isOpened : false));
 
   /** Renders */
   const _renderOverlay = () => {
