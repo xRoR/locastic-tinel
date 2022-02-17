@@ -1,0 +1,13 @@
+version: '3.2'
+
+services:
+  backend:
+    image: cyxror/tinel-backend
+    build:
+      context: ./docker/server
+      dockerfile: ./docker/server/Dockerfile
+  app:
+    image: cyxror/tinel-frontend
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile

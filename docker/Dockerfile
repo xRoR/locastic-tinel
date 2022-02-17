@@ -1,7 +1,5 @@
 FROM --platform=linux/amd64 node:14-alpine AS build
 
-ENV NODE_ENV production
-
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
 
@@ -25,9 +23,9 @@ RUN curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`u
 
 RUN apk add --update nodejs
 RUN apk add --update npm
-RUN npm install -g runtime-env-cra@0.2.4`
+RUN npm install -g runtime-env-cra@0.2.4
 
-COPY ./nginx.config /etc/nginx/nginx.template
+COPY ./docker/nginx.config /etc/nginx/nginx.template
 
 COPY --from=build /app/.env.example /usr/share/nginx/html/.env
 COPY --from=build /app/build /usr/share/nginx/html

@@ -1,0 +1,69 @@
+version: '3.4'
+
+services:
+  backend:
+    image: cyxror/tinel-backend:latest
+    volumes:
+      - data:/app
+    networks:
+      - traefik-public
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.constraint-label=traefik-public
+        # Setup route
+        - traefik.http.routers.tinel-backend-http.rule=Host(`api.tinel.xror.net`)
+        - traefik.http.routers.tinel-backend-http.entrypoints=http
+        - traefik.http.routers.tinel-backend-http.middlewares=https-redirect
+        - traefik.http.routers.tinel-backend-https.rule=Host(`api.tinel.xror.net`)
+        - traefik.http.routers.tinel-backend-https.entrypoints=https
+        - traefik.http.routers.tinel-backend-https.tls=true
+        - traefik.http.routers.tinel-backend-https.tls.certresolver=le
+        - traefik.http.services.tinel-backend.loadbalancer.server.port=3001
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 2
+        delay: 10s
+        order: start-first
+  app:
+    image: cyxror/tinel-frontend:latest
+    networks:
+      - traefik-public
+    depends_on:
+      - backend
+    environment:
+      - API_URL=https://api.tinel.xror.net      
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.constraint-label=traefik-public
+        # Setup route
+        - traefik.http.routers.tinel-fe-http.rule=Host(`tinel.xror.net`)
+        - traefik.http.routers.tinel-fe-http.entrypoints=http
+        - traefik.http.routers.tinel-fe-http.middlewares=https-redirect
+        - traefik.http.routers.tinel-fe-https.rule=Host(`tinel.xror.net`)
+        - traefik.http.routers.tinel-fe-https.entrypoints=https
+        - traefik.http.routers.tinel-fe-https.tls=true
+        - traefik.http.routers.tinel-fe-https.tls.certresolver=le
+        - traefik.http.services.tinel-fe.loadbalancer.server.port=80
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 2
+        delay: 10s
+        order: start-first
+        failure_action: rollback
+volumes:
+  data:  
+networks:  
+  traefik-public:
+    external: true

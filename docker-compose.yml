@@ -4,6 +4,7 @@ services:
   backend:
     build:
       context: ./docker/server
+      dockerfile: ./docker/server/Dockerfile.dev
     ports:
       - 3001:3001
     networks:
