@@ -1,1 +1,1 @@
-window.__RUNTIME_CONFIG__ = {"API_URL":"http://localhost:3000"};
+window.__RUNTIME_CONFIG__ = {"API_URL":"http://localhost:3001"};

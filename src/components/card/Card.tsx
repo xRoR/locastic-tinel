@@ -9,6 +9,7 @@ import iconTime from '../../assets/icons/ic-time.svg';
 import Icon from '../icon/Icon';
 import { useStores } from '../../models/store-context';
 import { Link } from 'react-router-dom';
+import PriceFormat from '../partials/PriceFormat';
 
 const CardBox = styled.div`
   background: #ffffff;
@@ -68,6 +69,8 @@ const WorkshopDate = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 10px 0px;
+
+  font-weight: bold;
 `;
 
 const WorkshopDateSegment = styled.div`
@@ -173,7 +176,7 @@ const Card: React.FC<ColProps> = memo(({ workshop }) => {
           <UnstyledLink to={`workshop/${workshop.id}`}>{_renderTitle()}</UnstyledLink>
         </WorkshopTitle>
         <WorkshopPrice>
-          {workshop.price}
+          <PriceFormat amount={workshop.price} />
           <span>eur</span>
         </WorkshopPrice>
         <WorkshopBtn onClick={() => cartStore.addToCart(workshop)}>Add to cart</WorkshopBtn>

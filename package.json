@@ -30,10 +30,13 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --quiet",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev-app": "react-scripts start",
+    "dev-server": "json-server --port 3001 --watch ./docker/server/db.json",
+    "dev": "concurrently -k -c 'cyan.bold,green.bold' -n d: npm:dev-*"
   },
   "eslintConfig": {
     "extends": [
@@ -55,6 +58,8 @@
   },
   "devDependencies": {
     "@types/react-datepicker": "^4.3.4",
-    "@types/styled-components": "^5.1.22"
+    "@types/styled-components": "^5.1.22",
+    "concurrently": "^7.0.0",
+    "json-server": "^0.17.0"
   }
 }

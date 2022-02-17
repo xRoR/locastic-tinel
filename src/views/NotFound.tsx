@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../components/layout/Layout'
+import Layout, { LayoutContainer } from '../components/layout/Layout'
 import NotFoundMessage from '../components/partials/NotFoundMessage'
 
 
@@ -7,7 +7,9 @@ import NotFoundMessage from '../components/partials/NotFoundMessage'
 const NotFound = () => {
   return (
     <Layout>
+      <LayoutContainer>
       <NotFoundMessage>404 ;)</NotFoundMessage>
+      </LayoutContainer>
     </Layout>
   )
 }

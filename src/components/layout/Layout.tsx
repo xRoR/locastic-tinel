@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import { device } from '../../resources/values'
-import Footer from '../footer/Footer'
-import Header from '../header/Header'
-import { Col } from './Col'
+import React from 'react';
+import styled from 'styled-components';
+import { device } from '../../resources/values';
+import Footer from '../footer/Footer';
+import Header from '../header/Header';
+import { Col } from './Col';
 
-const LayoutContainer = styled.div`
+export const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 1440px;
@@ -16,9 +16,8 @@ const LayoutContainer = styled.div`
   @media ${device.laptop} {
     flex-direction: row;
   }
-`
-export const LeftColumn = styled(Col)`
-`
+`;
+export const LeftColumn = styled(Col)``;
 export const Content = styled(Col)`
   flex: 1;
   padding-top: 0;
@@ -26,18 +25,16 @@ export const Content = styled(Col)`
   @media ${device.laptop} {
     padding-top: 20px;
   }
-`
+`;
 
-const Layout: React.FC = ({children}) => {
+const Layout: React.FC = ({ children }) => {
   return (
     <>
       <Header />
-      <LayoutContainer>
-        {children}
-      </LayoutContainer>
+      {children}
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

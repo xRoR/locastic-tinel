@@ -93,6 +93,20 @@ export const CatalogStoreModel = types
       } else {
         console.log(result.kind);
       }
+    },
+    getWorkshopByCategory: async (category: string) => {
+      const api = new WorkshopApi(self.environment.api);
+      const result = await api.getWorkshops({
+        _page: 1,
+        _limit: 3,
+        category: category,
+      });
+
+      if (result.kind === 'ok') {
+        return result.workshops;
+      } else {
+        console.log(result.kind);
+      }
     }
   }))
   .actions((self) => ({

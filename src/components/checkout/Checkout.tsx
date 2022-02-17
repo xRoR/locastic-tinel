@@ -25,10 +25,10 @@ const Overlay = styled(animated.div)`
 const Modal = styled(animated.div)`
   background: #fff;
   max-width: 780px;
-  height: auto;
+  height: calc(100vh - 10px);
 
   border-radius: 10px;
-  padding: 20px;
+  padding: 40px;
   margin: 10px auto;
 
   position: absolute;
@@ -36,9 +36,14 @@ const Modal = styled(animated.div)`
   right: 0;
 
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
 
   @media ${device.laptop} {
     padding: 90px;
+    height: auto;
   }
 `;
 
@@ -46,6 +51,7 @@ const CheckoutHeader = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 35px;
+  width: 100%;
 `
 
 const Checkout = observer(() => {

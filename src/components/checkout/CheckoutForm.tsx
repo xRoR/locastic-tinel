@@ -8,6 +8,7 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  width: 100%;
 `;
 
 const ErrorMessage = styled.p`

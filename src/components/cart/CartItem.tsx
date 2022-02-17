@@ -6,6 +6,7 @@ import { useStores } from '../../models/store-context';
 import { Workshop } from '../../models/workshop/workshop';
 import { colors } from '../../resources/colors';
 import { margins } from '../../resources/values';
+import PriceFormat from '../partials/PriceFormat';
 import Selector from '../selector/Selector';
 
 const ItemWrapper = styled.div`
@@ -46,9 +47,11 @@ const ItemDetails = styled.div`
   justify-content: space-between;
   display: flex;
   flex-direction: row;
+  align-items: center;
 `;
 
 const ItemCost = styled.h3`
+  font-size: 20.3px;
   span {
     font-weight: bold;
     font-size: 13.5px;
@@ -103,7 +106,7 @@ const CartItem: React.FC<{ item: Workshop }> = observer(({ item }) => {
         <ItemDetails>
           <Selector value={item.qty || 1} options={options} onSelect={updateQty} />
           <ItemCost>
-            {item.cost}
+            <PriceFormat amount={item.cost} />
             <span>EUR</span>
           </ItemCost>
         </ItemDetails>

@@ -1,0 +1,20 @@
+FROM node:14-alpine AS development
+ENV NODE_ENV development
+
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
+
+WORKDIR /app
+
+COPY ./package.json .
+COPY ./yarn.lock .
+
+RUN yarn
+
+COPY . .
+
+ENV FORCE_COLOR=true
+
+EXPOSE 3000
+
+CMD [ "yarn", "start" ]

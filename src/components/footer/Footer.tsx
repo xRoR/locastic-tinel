@@ -9,7 +9,7 @@ const FooterWrapepr = styled.div`
 
     width: 100%;
     height: 80px;
-    background-color: ${colors.lightGrey10};
+    background-color: ${colors.lighterGrey};
 `
 
 const Footer = () => {

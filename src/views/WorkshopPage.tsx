@@ -1,16 +1,21 @@
+import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Layout, { Content, LeftColumn } from '../components/layout/Layout';
+import iconCalend from '../assets/icons/ic-calendar.svg';
+import iconTime from '../assets/icons/ic-time.svg';
+import { ReactComponent as BackIcon } from '../assets/icons/ic-back.svg';
+import AddToCart from '../components/add-to-cart/AddToCart';
+import AddToCartMobile from '../components/add-to-cart/AddToCartMobile';
+import Layout, { Content, LayoutContainer, LeftColumn } from '../components/layout/Layout';
 import NotFoundMessage from '../components/partials/NotFoundMessage';
+import SimilarWorkshops from '../components/similar-workshops/SimilarWorkshops';
 import { useStores } from '../models/store-context';
 import { Workshop } from '../models/workshop/workshop';
 import { colors } from '../resources/colors';
 import { device } from '../resources/values';
-import { ReactComponent as BackIcon } from '../assets/icons/ic-back.svg';
-import AddToCart from '../components/add-to-cart/AddToCart';
 import useWindowWidth from '../utils/useWindowWidth';
-import AddToCartMobile from '../components/add-to-cart/AddToCartMobile';
+import Icon from '../components/icon/Icon';
 
 const BackButton = styled.div`
   cursor: pointer;
@@ -33,14 +38,19 @@ const WorkshopImage = styled.div`
   background-repeat: no-repeat;
   background-position: center center;
 
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 
   @media ${device.laptop} {
     height: 382px;
     margin-top: 60px;
+    margin-bottom: 40px;
   }
 `;
-const InfoRow = styled.div``;
+const InfoRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
 
 const WorkshopBody = styled.div`
   display: flex;
@@ -77,6 +87,43 @@ const WorkshopCart = styled.div`
   background: #ffffff;
   box-shadow: 1px 2px 16px rgba(127, 127, 127, 0.25);
   border-radius: 8px;
+`;
+
+const WorkshopDate = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0px;
+
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+const WorkshopDateSegment = styled.div`
+  align-items: center;
+  display: flex;
+  margin-right: 20px;
+`;
+
+const WorkshopIcon = styled.div`
+  background-color: ${colors.darkerGrey};
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  position: absolute;
+  margin-top: -90px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media ${device.laptop} {
+    position: relative;
+    margin: 0;
+    margin-right: 20px;
+    right: 0;
+  }
 `;
 
 const WorkshopPage = () => {
@@ -128,34 +175,60 @@ const WorkshopPage = () => {
 
   if (!workshop) return null;
 
+  const _renderDate = () => {
+    const date = moment(workshop.date);
+    return (
+      <WorkshopDate>
+        <WorkshopDateSegment>
+          <img src={iconCalend} alt="company logo" />
+          &nbsp;
+          {date.format('DD.M.YYYY')}.
+        </WorkshopDateSegment>
+        <WorkshopDateSegment>
+          <img src={iconTime} alt="company logo" />
+          &nbsp;
+          {date.format('hh:mm')}h
+        </WorkshopDateSegment>
+      </WorkshopDate>
+    );
+  };
+
   return (
     <Layout>
-      <LeftColumn cols={1}>
-        <BackButton onClick={_handleBackButton}>
-          <BackIcon />
-          <span>Natrag</span>
-        </BackButton>
-      </LeftColumn>
-      <Content cols={3}>
-        <WorkshopImage style={{ backgroundImage: `url(${workshop.imageUrl})` }} />
-        <WorkshopBody>
-          <WorkshopDetails>
-            <InfoRow></InfoRow>
-            <WorkshopTitle>{workshop.title}</WorkshopTitle>
-            <WorkshopAuthor>
-              <span>with</span> {workshop.userId?.name || 'Our best author'}
-            </WorkshopAuthor>
-            <WorkshopText>{workshop.desc?.split('/n').join('<br />')}</WorkshopText>
-          </WorkshopDetails>
-          {isMobile ? (
-            <AddToCartMobile workshop={workshop}/>
-          ) : (
-            <WorkshopCart>
-              <AddToCart workshop={workshop} />
-            </WorkshopCart>
-          )}
-        </WorkshopBody>
-      </Content>
+      <LayoutContainer>
+        <LeftColumn cols={1}>
+          <BackButton onClick={_handleBackButton}>
+            <BackIcon />
+            <span>Natrag</span>
+          </BackButton>
+        </LeftColumn>
+        <Content cols={3}>
+          <WorkshopImage style={{ backgroundImage: `url(${workshop.imageUrl})` }} />
+          <WorkshopBody>
+            <WorkshopDetails>
+              <InfoRow>
+              <WorkshopIcon>
+                <Icon color="#FFF" icon={workshop.category || ''} />
+              </WorkshopIcon>
+                {_renderDate()}
+              </InfoRow>
+              <WorkshopTitle>{workshop.title}</WorkshopTitle>
+              <WorkshopAuthor>
+                <span>with</span> {workshop.userId?.name || 'Our best author'}
+              </WorkshopAuthor>
+              <WorkshopText>{workshop.desc?.split('/n').join('<br />')}</WorkshopText>
+            </WorkshopDetails>
+            {isMobile ? (
+              <AddToCartMobile workshop={workshop} />
+            ) : (
+              <WorkshopCart>
+                <AddToCart workshop={workshop} />
+              </WorkshopCart>
+            )}
+          </WorkshopBody>
+        </Content>
+      </LayoutContainer>
+      <SimilarWorkshops workshop={workshop}/>
     </Layout>
   );
 };

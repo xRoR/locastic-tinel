@@ -1,0 +1,26 @@
+version: '3.2'
+
+services:
+  backend:
+    build:
+      context: ./docker/server
+    ports:
+      - 3001:3001
+    networks:
+      - frontend-network
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    environment:
+      - API_URL=http://localhost:3001
+      - PORT=3000
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    networks:
+      - frontend-network
+networks:
+  frontend-network:

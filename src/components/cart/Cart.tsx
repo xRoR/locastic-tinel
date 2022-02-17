@@ -7,6 +7,7 @@ import { useStores } from '../../models/store-context';
 import { colors } from '../../resources/colors';
 import useScrollLock from '../../utils/useScrollLock';
 import useWindowWidth from '../../utils/useWindowWidth';
+import PriceFormat from '../partials/PriceFormat';
 import CartHeader from './CartHeader';
 import CartItem from './CartItem';
 
@@ -190,7 +191,8 @@ const Cart: React.FC<{
               <CartTotal>
                 <span>Subtotal</span>
                 <CartAmount>
-                  {cartStore.cartTotal} <span>EUR</span>
+                  <PriceFormat amount={cartStore.cartTotal} />
+                  <span>EUR</span>
                 </CartAmount>
               </CartTotal>
               <CartBtn onClick={() => cartStore.startCheckout()}>Checkout</CartBtn>

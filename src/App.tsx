@@ -31,7 +31,7 @@ function App() {
           <Route path="workshop/:id" element={<WorkshopPage />} />
           <Route path="*" element={<NotFound />}/>
         </Routes>
-        <Cart  />
+        <Cart />
         <Checkout />
       </div>
     </RootStoreProvider>

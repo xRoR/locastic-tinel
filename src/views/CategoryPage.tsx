@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Card from '../components/card/Card';
 import { CategoryFilter } from '../components/category-filter';
 import { Col } from '../components/layout/Col';
-import Layout, { Content, LeftColumn } from '../components/layout/Layout';
+import Layout, { Content, LayoutContainer, LeftColumn } from '../components/layout/Layout';
 import { useStores } from '../models/store-context';
 import { colors } from '../resources/colors';
 import { device, spacings } from '../resources/values';
@@ -67,31 +67,33 @@ const CategoryPage = observer(() => {
 
     fetchData();
   }, [catalogStore, totalWorkshops]);
-  
+
   return (
     <Layout>
-      <LeftColumn cols={1}>
-        <CategoryTitle>{!isMobile && <SubTitle>Filter by category:</SubTitle>}</CategoryTitle>
-        <CategoryFilter />
-      </LeftColumn>
-      <Content cols={3}>
-        <CategoryTitle>
-          <h2>Workshops</h2>
-          <SubTitle>Displayed: {totalWorkshops}</SubTitle>
-        </CategoryTitle>
-        <CategoryList>
-          {workshops.map((workshop) => (
-            <Card key={`workshop_${workshop.id}`} workshop={workshop} />
-          ))}
-        </CategoryList>
-        {pagination?.next && (
-          <Col style={{ marginLeft: 'auto'}} cols={1}>
-            <MoreBtn onClick={() => catalogStore.fetchNextWorkshops()}>
-              <span>Load More</span>
-            </MoreBtn>
-          </Col>
-        )}
-      </Content>
+      <LayoutContainer>
+        <LeftColumn cols={1}>
+          <CategoryTitle>{!isMobile && <SubTitle>Filter by category:</SubTitle>}</CategoryTitle>
+          <CategoryFilter />
+        </LeftColumn>
+        <Content cols={3}>
+          <CategoryTitle>
+            <h2>Workshops</h2>
+            <SubTitle>Displayed: {totalWorkshops}</SubTitle>
+          </CategoryTitle>
+          <CategoryList>
+            {workshops.map((workshop) => (
+              <Card key={`workshop_${workshop.id}`} workshop={workshop} />
+            ))}
+          </CategoryList>
+          {pagination?.next && (
+            <Col style={{ marginLeft: 'auto' }} cols={1}>
+              <MoreBtn onClick={() => catalogStore.fetchNextWorkshops()}>
+                <span>Load More</span>
+              </MoreBtn>
+            </Col>
+          )}
+        </Content>
+      </LayoutContainer>
     </Layout>
   );
 });

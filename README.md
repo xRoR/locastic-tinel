@@ -1,46 +1,30 @@
-# Getting Started with Create React App
+# Tinel Workshop - Demo app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project cool webstore for selling workshops
 
-## Available Scripts
+## Stuff I use here
 
-In the project directory, you can run:
+- State:
+For state management I use [mobx-state-tree](https://mobx-state-tree.js.org/intro/welcome), it work very well with TS and brilliantly map backend data
 
-### `yarn start`
+- Styling:
+For pixelperfect(?ish) :) I often use styled-components, they are easy to maintain and great for dynamic styling.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+>I can do similar expirience with plain SCSS/CSS and/or Redux + Redux-Thunk
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Delivery
 
-### `yarn test`
+- Docker: 
+I use docker swarm + traefik proxy, it`s quick and easy solution. But I can deploy same/similar stack via noserver services ([vercel](https://vercel.com/), etc) or just plain vps 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## Run locally
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Via docker: docker-compose up
+- Via cli: yarn dev 
+> Will run app and mock-backend-server concurrently with one log output
+## P.S.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Developer always has huge amounts silly questions ;) , like: "How that have to work?", "How you want display this thing?", etc. So am I: about cart, do cart item have to be merged or added separately, animations, other minor staff, so I implement all questionable things in my way (not necessary correct ;) ).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Some things like overlays and screenlock I add as opt-in/opt-out props to components.

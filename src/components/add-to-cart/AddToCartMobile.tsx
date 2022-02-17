@@ -22,6 +22,8 @@ const MobileAddToCart = styled.div`
   gap: 16px;
   justify-content: space-evenly;
   align-items: center;
+
+  z-index: 2;
 `;
 
 const ItemPrice = styled.h3`
