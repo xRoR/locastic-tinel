@@ -5,7 +5,7 @@ services:
     image: cyxror/tinel-backend
     build:
       context: ./docker/server
-      dockerfile: ./docker/server/Dockerfile
+      dockerfile: ./Dockerfile
   app:
     image: cyxror/tinel-frontend
     build:
