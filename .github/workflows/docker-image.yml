@@ -16,7 +16,21 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker-compose -f docker-compose.yml -f docker/build.yml build
+    - name: Login to Docker registry
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
     - name: Push images to registry
       run: docker-compose -f docker-compose.yml -f docker/build.yml push
+    - name: Deploy to docker swarm
+      uses: sagebind/docker-swarm-deploy-action@v2
+      with:
+        remote_host: ssh://root@tinel.xror.net
+        ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
+        ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
+        args: stack deploy --compose-file docker/stack.yaml tinel
+
       
     
