@@ -57,7 +57,7 @@ interface CardBodyProps {
   readonly isMobile?: boolean;
 }
 const CartBody = styled.div<CardBodyProps>`
-  height: calc(100vh - 80px);
+  height: calc(100vh - 90px);
   overflow: hidden;
   overflow-y: auto;
   margin-bottom: 20px;
@@ -128,7 +128,7 @@ const Cart: React.FC<{
   const [{ right }, api] = useSpring(() => ({ right: -(panelWidth + WOBBLY_WIDTH) }));
 
   const open = useCallback(() => {
-    api.start({ right: -WOBBLY_WIDTH, immediate: false, config: config.stiff });
+    api.start({ right: -WOBBLY_WIDTH, immediate: false});
   }, [api]);
 
   const close = useCallback(
@@ -148,7 +148,7 @@ const Cart: React.FC<{
       if (right.get() > -WOBBLY_WIDTH) return cancel();
 
       if (last) {
-        if (right.get() < -(panelWidth / 2)) return cartStore.closeCart();
+        (right.get() < -(panelWidth / 2)) ? cartStore.closeCart() : open();
       } else api.start({ right: right.get() - dx, immediate: true });
     },
     { from: () => [0, right.get()], filterTaps: true, bounds: { top: 0 }, rubberband: true }
@@ -180,7 +180,7 @@ const Cart: React.FC<{
 
   return (
     <>
-      <Panel {...bind()} width={panelWidth} $shown={isOpened} style={{ right }}>
+      <Panel id="panel" {...bind()} width={panelWidth} $shown={isOpened} style={{ right }}>
         <CartWrapper>
           <CartHeader></CartHeader>
           {itemsCount > 0 && (

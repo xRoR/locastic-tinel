@@ -18,11 +18,14 @@ const SimilarHolder = styled.div`
 
   @media ${device.laptop} {
     justify-content: flex-start;
+    margin-top: 40px;
   }
 `;
 
 const SimilarTitle = styled.h2`
-  margin-top: 80px;
+  @media ${device.laptop} {
+    margin-top: 80px;
+  }
 `;
 
 const Similar = styled(LayoutContainer)`
@@ -51,7 +54,7 @@ const SimilarWorkshops: React.FC<{ workshop: Workshop }> = observer(({ workshop 
         <SimilarTitle>Similar Workshops</SimilarTitle>
         <SimilarHolder>
           {same.map((workshop, index) => (
-            <Card key={`simillar_${index}`} workshop={workshop} />
+            <Card replace key={`simillar_${index}`} workshop={workshop} />
           ))}
         </SimilarHolder>
       </Content>

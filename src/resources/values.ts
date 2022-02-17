@@ -28,4 +28,9 @@ export const margins = {
     defult: 20
 }
 
+export const panel_measures = {
+    width: 375,
+    wobly: 80
+}
+
 export const spacings = [0, 4, 8, 12, 16, 24, 32, 48, 64]

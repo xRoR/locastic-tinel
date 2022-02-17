@@ -125,9 +125,10 @@ const WorkshopBtn = styled.div`
 
 interface ColProps {
   workshop: Workshop;
+  replace?: boolean;
 }
 
-const Card: React.FC<ColProps> = memo(({ workshop }) => {
+const Card: React.FC<ColProps> = memo(({ workshop, replace }) => {
   /** Global state */
   const { cartStore } = useStores();
 
@@ -162,7 +163,7 @@ const Card: React.FC<ColProps> = memo(({ workshop }) => {
   return (
     <CardBox>
       <CardHeader>
-        <Link to={`workshop/${workshop.id}`}>
+        <Link to={`/workshop/${workshop.id}`} replace={replace}>
           <CardImage style={{ backgroundImage: `url(${workshop.imageUrl})` }} />
         </Link>
         <WorkshopIcon>
@@ -173,7 +174,7 @@ const Card: React.FC<ColProps> = memo(({ workshop }) => {
       <CardBody>
         {_renderDate()}
         <WorkshopTitle>
-          <UnstyledLink to={`workshop/${workshop.id}`}>{_renderTitle()}</UnstyledLink>
+          <UnstyledLink to={`/workshop/${workshop.id}`} replace={replace}>{_renderTitle()}</UnstyledLink>
         </WorkshopTitle>
         <WorkshopPrice>
           <PriceFormat amount={workshop.price} />

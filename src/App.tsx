@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import './App.css';
-import Cart from "./components/cart/Cart";
 import Checkout from "./components/checkout/Checkout";
 import { RootStore } from "./models/root-store";
 import { RootStoreProvider } from "./models/store-context";
@@ -31,7 +30,6 @@ function App() {
           <Route path="workshop/:id" element={<WorkshopPage />} />
           <Route path="*" element={<NotFound />}/>
         </Routes>
-        <Cart />
         <Checkout />
       </div>
     </RootStoreProvider>

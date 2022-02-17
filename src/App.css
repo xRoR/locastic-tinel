@@ -1,57 +1,82 @@
 .App {
     max-width: 1440px;
     margin: 0 auto;
-    position: relative;   
 }
 
 body {
     overflow-x: hidden;
+    position: relative;
+    padding-top: 90px;
 }
+
 /** Typography */
-
-p {
-    font-size: 18px;
-    line-height: 125%;
+h1 {
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 120%;
+    margin: 0;
 }
 
-h6 {
+h2 {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 32px;
+    line-height: 125%;
+    margin: 0;
+}
+
+h3 {
+    font-weight: bold;
+    font-size: 20.3px;
+    line-height: 125%;
+    margin: 0;
+}
+
+h4 {
+    font-weight: bold;
+    font-size: 18.9px;
     line-height: 125%;
     margin: 0;
 }
 
 h5 {
     font-weight: bold;
-    font-size: 23px;
+    font-size: 18.4px;
     line-height: 125%;
     margin: 0;
 }
 
-h4 {
-    font-weight: 700;
-    font-size: 27px;
-    line-height: 33.75px;
-    margin: 0;
-}
-
-h3 {
-    font-weight: 700;
-    font-size: 29px;
-    line-height: 36.25px;
-    margin: 0;
-}
-
-h2 {
+h6 {
     font-weight: bold;
-    font-size: 40px;
+    font-size: 13.5px;
     line-height: 125%;
     margin: 0;
 }
 
-h1 {
-    font-weight: bold;
-    font-size: 60px;
-    line-height: 120%;
-    margin: 0;
+p {
+    font-size: 14.4px;
+    line-height: 125%;
+}
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 60px;
+    }
+    h2 {
+        font-size: 40px;
+    }
+    h3 {
+        font-size: 29px;
+    }
+    h4 {
+        font-size: 27px;
+    }
+    h5 {
+        font-size: 23px;
+    }
+    h6 {
+        font-size: 15px;
+    }
+    p {
+        font-size: 18px;
+    }
 }
