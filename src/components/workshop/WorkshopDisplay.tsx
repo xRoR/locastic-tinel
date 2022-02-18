@@ -96,7 +96,7 @@ const WorkshopIcon = styled.div`
   height: 40px;
   overflow: hidden;
   position: absolute;
-  margin-top: -90px;
+  margin-top: -45px;
   right: 40px;
   display: flex;
   align-items: center;
