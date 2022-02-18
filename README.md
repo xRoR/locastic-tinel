@@ -10,7 +10,7 @@ For state management I use [mobx-state-tree](https://mobx-state-tree.js.org/intr
 - Styling:
 For pixelperfect(?ish) :) I often use styled-components, they are easy to maintain and great for dynamic styling.
 
->I can do similar expirience with plain SCSS/CSS and/or Redux + Redux-Thunk
+>I can do similar experience with plain SCSS/CSS and/or Redux + Redux-Thunk
 
 ## Delivery
 
@@ -28,10 +28,10 @@ Also add workflow to build images and update deployed stack on swarm
 > Will run app and mock-backend-server concurrently with one log output
 ## P.S.
 
-Developer always has huge amounts silly questions ;) , like: "How that have to work?", "How you want display this thing?", etc. So am I: about cart, do cart item have to be merged or added separately, how back btn will work on deeper page (simillar workshops), animations, other minor staff, so I implement all questionable things in my way (not necessary correct ;) ).
+Developers always have huge amounts of silly questions ;) , like: "How does that has to work?", "How do you want to display this thing?", etc. So am I: about carts, do cart items have to be merged or added separately, how the back btn will work on a deeper page (similar workshops), animations, other minor stuff, so I implement all questionable things in my way (not necessarily correct ;) ).Some things like overlays and screenlock I add as opt-in/opt-out props to components.
 
 Some things like overlays and screenlock I add as opt-in/opt-out props to components.
 
 ## P.P.S
 
-Known bugs -  sometimes modal with keyboard opened acting wierd (iOS safary always give us opportunity grow up)
+Known bugs - sometimes modal with keyboard opened acting weird (iOS safari always give us opportunity grow up)
