@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { animated, config, useTransition } from 'react-spring';
 import styled from 'styled-components';
 import { ReactComponent as Close } from '../../assets/icons/ic-close.svg';
@@ -9,6 +9,8 @@ import { device } from '../../resources/values';
 import useScrollLock from '../../utils/useScrollLock';
 import Btn from '../partials/Btn';
 import CheckoutForm from './CheckoutForm';
+
+const NAVIGATION_ELEMENTS = 100;
 
 const Overlay = styled(animated.div)`
   position: fixed;
@@ -25,7 +27,6 @@ const Overlay = styled(animated.div)`
 const Modal = styled(animated.div)`
   background: #fff;
   max-width: 780px;
-  height: calc(100vh - 10px);
 
   border-radius: 10px;
   padding: 40px;
@@ -52,7 +53,11 @@ const CheckoutHeader = styled.div`
   flex-direction: row;
   margin-bottom: 35px;
   width: 100%;
-`
+`;
+
+const SuccessMessage = styled.div`
+  height: calc(var(--vp-height) - ${NAVIGATION_ELEMENTS}px);
+`;
 
 const Checkout = observer(() => {
   const navigate = useNavigate();
@@ -60,63 +65,75 @@ const Checkout = observer(() => {
   /** Global state */
   const { cartStore } = useStores();
   const { inCheckout, sendOrder } = cartStore;
-  
+
   /** Local state */
   const [submitted, setSubmitted] = useState(false);
 
   /** Fn */
   const handleSubmit = useCallback(
     async (values) => {
-      const {kind} = await sendOrder(values);
+      const { kind } = await sendOrder(values);
       if (kind === 'ok') setSubmitted(true);
     },
-    [sendOrder],
-  )
+    [sendOrder]
+  );
 
   const handleBack = () => {
-    navigate("/", { replace: true });
+    navigate('/', { replace: true });
     cartStore.cancelCheckout();
     setSubmitted(false);
-  }
-  
+  };
+
   /** Animations */
   const modalTransition = useTransition(inCheckout, {
     config: inCheckout ? { ...config.stiff } : { duration: 150 },
-    from: { opacity: 0, transform: "translateY(-40px)" },
-    enter: { opacity: 1, transform: "translateY(0px)" },
-    leave: { opacity: 0, transform: "translateY(-40px)" },
-    key: 'checkoutModal'
+    from: { opacity: 0, transform: 'translateY(-40px)' },
+    enter: { opacity: 1, transform: 'translateY(0px)' },
+    leave: { opacity: 0, transform: 'translateY(-40px)' },
+    key: 'checkoutModal',
   });
 
   /** Effects */
-  useScrollLock(inCheckout);
+  useScrollLock(inCheckout, 'checkout')
 
-  return (
-    <>
-      {modalTransition(
-        (style, item, { key }) =>
-         {
-          return item && (
-            <Overlay key={`el_${key}`} style={{ opacity: style.opacity }} >
-              <Modal style={style}>
+  return modalTransition((style, item, { key }) => {
+    return (
+      item && (
+        <Overlay key={`el_${key}`} style={{ opacity: style.opacity }}>
+          <Modal style={style}>
+            {submitted ? (
+              <SuccessMessage>
                 <CheckoutHeader>
                   <div>
-                    <h2>{submitted ? 'Thank you!' : 'Checkout'}</h2>
-                    <p style={{width: 300}}>What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing.</p>
+                    <h2>Thank you!</h2>
+                    <p style={{ width: 300 }}>
+                      What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing.
+                    </p>
                   </div>
-                  {submitted ? null : (<div style={{marginLeft: 'auto'}}>
-                    <Close style={{cursor: 'pointer'}} onClick={() => cartStore.cancelCheckout()}/>
-                  </div>)}
-                  
                 </CheckoutHeader>
-                {submitted ? <Btn onClick={handleBack}>Back to Shop</Btn> : <CheckoutForm onSubmit={handleSubmit}/>}
-              </Modal>
-            </Overlay>
-          )
-         }
-      )}
-    </>
-  );
+                <Btn onClick={handleBack}>Back to Shop</Btn>
+              </SuccessMessage>
+            ) : (
+              <>
+                <CheckoutHeader>
+                  <div>
+                    <h2>Checkout</h2>
+                    <p style={{ width: 300 }}>
+                      What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing.
+                    </p>
+                  </div>
+                  <div style={{ marginLeft: 'auto' }}>
+                    <Close style={{ cursor: 'pointer' }} onClick={() => cartStore.cancelCheckout()} />
+                  </div>
+                </CheckoutHeader>
+                <CheckoutForm onSubmit={handleSubmit} />
+              </>
+            )}
+          </Modal>
+        </Overlay>
+      )
+    );
+  });
 });
 
 export default Checkout;

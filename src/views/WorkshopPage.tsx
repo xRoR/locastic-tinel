@@ -1,4 +1,3 @@
-
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -11,7 +10,6 @@ import { useStores } from '../models/store-context';
 import { Workshop } from '../models/workshop/workshop';
 import { device } from '../resources/values';
 
-
 const BackButton = styled.div`
   cursor: pointer;
   display: flex;
@@ -22,12 +20,9 @@ const BackButton = styled.div`
   }
 `;
 
-
 const WorkshopPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-
 
   /** Global state */
   const { catalogStore } = useStores();
@@ -53,9 +48,6 @@ const WorkshopPage = () => {
   }, [getWorkshop, id, showWorkshop]);
 
   const _handleBackButton = () => {
-    console.log(window?.history);
-    console.log(location);
-    
     const idx = window?.history?.state?.idx;
     if (!idx) return navigate('/');
     navigate(-1);
@@ -87,11 +79,9 @@ const WorkshopPage = () => {
             <span>Natrag</span>
           </BackButton>
         </LeftColumn>
-        <Content cols={3}>
-          {workshop && (<WorkshopDisplay workshop={workshop}/>)}
-        </Content>
+        <Content cols={3}>{workshop && <WorkshopDisplay workshop={workshop} />}</Content>
       </LayoutContainer>
-      {workshop && (<SimilarWorkshops workshop={workshop}/>)}
+      {workshop && <SimilarWorkshops workshop={workshop} />}
     </Layout>
   );
 };

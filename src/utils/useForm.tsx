@@ -2,7 +2,7 @@ import DatePicker from 'react-datepicker';
 import { ReactElement, useCallback, useMemo, useReducer, useState } from 'react';
 import styled from 'styled-components';
 import checkmark from '../assets/icons/ic-checkmark.svg';
-import {ReactComponent as Calendar} from '../assets/icons/ic-calendar-input.svg';
+import { ReactComponent as Calendar } from '../assets/icons/ic-calendar-input.svg';
 import { colors } from '../resources/colors';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -17,25 +17,29 @@ const FormFeedback = styled.div`
 
   color: #ff392e;
 `;
+
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 35px;
   position: relative;
 `;
+
 const FormText = styled.div`
   font-size: 12px;
 `;
-const Input = styled.input<{ invalid?: boolean, withIcon?: boolean, }>`
+
+const Input = styled.input<{ invalid?: boolean; withIcon?: boolean }>`
   width: 100%;
   font-size: 18px;
   line-height: 150%;
-  padding: ${({withIcon}) => withIcon ? '14px 20px 14px 40px' : '14px 20px'};
+  padding: ${({ withIcon }) => (withIcon ? '14px 20px 14px 40px' : '14px 20px')};
   outline: none;
   box-sizing: border-box;
 
   color: ${colors.lightGrey};
   border: none;
+  border-radius: 0;
   border-bottom: 2px solid ${colors.darkerGrey};
 
   &:hover {
@@ -60,7 +64,7 @@ const CalendarIcon = styled(Calendar)`
   position: absolute;
   left: 10px;
   bottom: 19px;
-`
+`;
 
 const Label = styled.div`
   margin-bottom: 5px;
@@ -107,13 +111,14 @@ const CheckboxInput = styled.input<{ invalid: boolean }>`
 const Select = styled.select`
   width: 100%;
   font-size: 18px;
-  line-height: 150%;
   padding: 16px 0px 17px;
   outline: none;
   box-sizing: border-box;
+  height: 60px;
 
   color: ${colors.lightGrey};
   border: none;
+  border-radius: 0;
   border-bottom: 2px solid ${colors.darkerGrey};
 
   &:hover {
@@ -172,7 +177,7 @@ export const useForm = ({ fields, validate, formFields }: UseFormProps) => {
       ready: false,
       pristine: true,
       datePickerShown: false,
-      isValid: true
+      isValid: true,
     }),
     [fieldsObject]
   );
@@ -195,7 +200,7 @@ export const useForm = ({ fields, validate, formFields }: UseFormProps) => {
           if (Object.values(state.errors).filter((i) => i).length > 0) return false;
           if (Object.values(state.values).filter((i) => i !== '').length === 0) return false;
           return true;
-        }
+        };
         return { ...state, isValid: isValid() };
       case 'SET_DATEPICKER':
         return { ...state, datePickerShown: action.payload };
@@ -223,7 +228,7 @@ export const useForm = ({ fields, validate, formFields }: UseFormProps) => {
           payload: { ...validate(name, fieldValue, values) },
         });
         dispatch({
-          type: 'UPDATE_VALID_STATE'
+          type: 'UPDATE_VALID_STATE',
         });
       }
     },
@@ -236,20 +241,21 @@ export const useForm = ({ fields, validate, formFields }: UseFormProps) => {
     return true;
   }, [errors, values]);
 
-  const validateForm = useCallback(
-    () => {
-      for (const [key, value] of Object.entries(values)) {
-        dispatch({
-          type: 'SET_ERRORS',
-          payload: { ...validate?.(key, value, values) },
-        });
-      }
-      dispatch({
-        type: 'UPDATE_VALID_STATE'
-      });
-    },
-    [values, validate],
-  )
+  const validateForm = useCallback(() => {
+    let errors = {};
+    for (const [key, value] of Object.entries(values)) {
+      errors = {...errors, ...validate?.(key, value, values)}
+    }
+    dispatch({
+      type: 'SET_ERRORS',
+      payload: errors,
+    });
+    dispatch({
+      type: 'UPDATE_VALID_STATE',
+    });
+
+    return Object.values(errors).filter(i => i).length === 0;
+  }, [values, validate]);
 
   const renderField = (field: FormField, index: number | string): ReactElement<any, any> => {
     switch (field.type) {
@@ -268,7 +274,6 @@ export const useForm = ({ fields, validate, formFields }: UseFormProps) => {
             />
             <CheckboxLabel htmlFor={`checkbox${field.name}`}>{field.lable}</CheckboxLabel>
             {field.info && <FormText>{field.info}</FormText>}
-            
           </FormGroup>
         );
       case 'date':
@@ -280,14 +285,16 @@ export const useForm = ({ fields, validate, formFields }: UseFormProps) => {
             </Label>
             <CalendarIcon />
             <DatePicker
-              customInput={<Input 
-                withIcon={true}
-                name={field.name}
-                value={values[field.name]}
-                onChange={handleFieldChange}
-                invalid={errors[field.name] !== false}
-                className={!!values[field.name] ? 'filled' : undefined}
-              />}
+              customInput={
+                <Input
+                  withIcon={true}
+                  name={field.name}
+                  value={values[field.name]}
+                  onChange={handleFieldChange}
+                  invalid={errors[field.name] !== false}
+                  className={!!values[field.name] ? 'filled' : undefined}
+                />
+              }
               dateFormat={'dd.MM.yyyy'}
               selected={values[field.name]}
               onChange={(date) => {
@@ -308,7 +315,11 @@ export const useForm = ({ fields, validate, formFields }: UseFormProps) => {
             </Label>
             <Select>
               {field.options?.map((option, index) => {
-                return <option key={`${field.name}_${index}`} value={option}>{option}</option>;
+                return (
+                  <option key={`${field.name}_${index}`} value={option}>
+                    {option}
+                  </option>
+                );
               })}
             </Select>
           </FormGroup>

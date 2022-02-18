@@ -63,7 +63,6 @@ const Cart = observer(() => {
   /** Global state */
   const { cartStore } = useStores();
   const { isOpened } = cartStore;
-  console.log(isOpened);
 
   /** Fn */
   const getOffset = useCallback(() => {

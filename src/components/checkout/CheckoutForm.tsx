@@ -129,7 +129,7 @@ const CheckoutForm: React.FC<{ onSubmit: (values: any) => void }> = ({ onSubmit 
     },
   ];
 
-  const { formState, renderField, checkValidity, validateForm } = useForm({
+  const { formState, renderField, validateForm } = useForm({
     formFields,
     validate,
   });
@@ -138,15 +138,12 @@ const CheckoutForm: React.FC<{ onSubmit: (values: any) => void }> = ({ onSubmit 
 
   /** Fn */
   const submit = useCallback(async () => {
-    validateForm();
-    console.log(checkValidity());
-    
-    if (!checkValidity()) return;
+    if (!validateForm()) return;
 
     const { values } = formState;
 
     if (typeof onSubmit === 'function') onSubmit(values);
-  }, [checkValidity, formState, onSubmit, validateForm]);
+  }, [formState, onSubmit, validateForm]);
 
 
   return (

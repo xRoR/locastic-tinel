@@ -8,6 +8,7 @@ interface ColProps {
 export const Col = styled.div<ColProps>`
   width: 100%;
   box-sizing: border-box;
+  
   @media ${device.laptop} {
     max-width: ${({ cols }: any) => (cols * grid.width) + (grid.gap * (cols - 1))}px;
   }

@@ -13,6 +13,7 @@ import CartItem from './CartItem';
 
 const PANEL_WIDTH = 375;
 const WOBBLY_WIDTH = 80;
+const CARD_HEADER_HEIGHT = 90;
 
 interface PanelProps {
   readonly width: number;
@@ -27,7 +28,7 @@ const Overlay = styled(animated.div)`
   top: 0;
   left: 0;
   z-index: 3;
-  background-color: #FFFFFFa0;
+  background-color: #ffffffa0;
 `;
 
 const Panel = styled(animated.div)<PanelProps>`
@@ -57,16 +58,16 @@ interface CardBodyProps {
   readonly isMobile?: boolean;
 }
 const CartBody = styled.div<CardBodyProps>`
-  height: calc(100vh - 90px);
+  height: calc(var(--vp-height) - ${CARD_HEADER_HEIGHT}px);
   overflow: hidden;
   overflow-y: auto;
   margin-bottom: 20px;
-  
+
   scrollbar-width: thin;
 
   &::-webkit-scrollbar {
     height: 8px;
-    width: 6px;;
+    width: 6px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -99,7 +100,7 @@ const CartBtn = styled.div`
   color: #fff;
   box-shadow: 1px 2px 8px rgba(127, 127, 127, 0.25);
   border-radius: 6px;
-  margin: 40px auto 0;
+  margin: 40px auto 40px;
 
   display: flex;
   justify-content: center;
@@ -112,11 +113,11 @@ const CartBtn = styled.div`
 `;
 
 const Cart: React.FC<{
-  withOverlay?: boolean,
-  withScrollLock?: boolean
-}> = observer(({withOverlay = false, withScrollLock = false}) => {
+  withOverlay?: boolean;
+  withScrollLock?: boolean;
+}> = observer(({ withOverlay = false, withScrollLock = false }) => {
   const { isMobile, width: windowWidth } = useWindowWidth();
-
+  
   /** Global state */
   const { cartStore } = useStores();
   const { isOpened, items, itemsCount } = cartStore;
@@ -128,7 +129,7 @@ const Cart: React.FC<{
   const [{ right }, api] = useSpring(() => ({ right: -(panelWidth + WOBBLY_WIDTH) }));
 
   const open = useCallback(() => {
-    api.start({ right: -WOBBLY_WIDTH, immediate: false});
+    api.start({ right: -WOBBLY_WIDTH, immediate: false });
   }, [api]);
 
   const close = useCallback(
@@ -148,7 +149,7 @@ const Cart: React.FC<{
       if (right.get() > -WOBBLY_WIDTH) return cancel();
 
       if (last) {
-        (right.get() < -(panelWidth / 2)) ? cartStore.closeCart() : open();
+        right.get() < -(panelWidth / 2) ? cartStore.closeCart() : open();
       } else api.start({ right: right.get() - dx, immediate: true });
     },
     { from: () => [0, right.get()], filterTaps: true, bounds: { top: 0 }, rubberband: true }
@@ -166,8 +167,8 @@ const Cart: React.FC<{
   useEffect(() => {
     isOpened ? open() : close();
   }, [isOpened, open, close]);
-
-  useScrollLock(isMobile ? isOpened : (withScrollLock  ? isOpened : false));
+  
+  useScrollLock(isMobile ? isOpened : (withScrollLock ? isOpened : false), 'cart');
 
   /** Renders */
   const _renderOverlay = () => {
@@ -175,7 +176,7 @@ const Cart: React.FC<{
 
     return overlayTransition(
       (style, item, { key }) => item && <Overlay style={style} onClick={() => cartStore.closeCart()} />
-    )
+    );
   };
 
   return (
