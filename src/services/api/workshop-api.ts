@@ -29,6 +29,8 @@ export class WorkshopApi {
     _order = 'asc',
   }: WorkshopsRequest): Promise<WorkshopsResult> {
     try {
+      console.log(this.api);
+      
       const response: ApiResponse<any> = await this.api.apisauce.get('workshops', {
         _page,
         _limit,
@@ -36,7 +38,8 @@ export class WorkshopApi {
         _sort,
         _order
       });
-
+      console.log(response);
+      
       if (!response.ok) {
         const problem = getGeneralApiProblem(response);
         if (problem) return problem;

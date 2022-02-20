@@ -185,7 +185,7 @@ const Cart: React.FC<{
         <CartWrapper>
           <CartHeader></CartHeader>
           {itemsCount > 0 && (
-            <CartBody>
+            <CartBody role="list">
               {items.map((item, index) => (
                 <CartItem item={item} key={`cart_item_${index}`} />
               ))}

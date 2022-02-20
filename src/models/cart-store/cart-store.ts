@@ -4,7 +4,7 @@ import { withStoreEnv } from "../extentions/with-stote-env"
 import { OrderApi } from "../../services/api/order-api"
 
 /**
- * Example store containing Rick and Morty Carts
+ * Store for cart state
  */
 export const CartStoreModel = types
   .model("CartStore")

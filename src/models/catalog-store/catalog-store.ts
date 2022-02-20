@@ -1,7 +1,7 @@
-import { Instance, SnapshotOut, types } from 'mobx-state-tree';
+import { Instance, SnapshotOut, types, applySnapshot } from 'mobx-state-tree';
 import { WorkshopApi } from '../../services/api/workshop-api';
 import { withStoreEnv } from '../extentions/with-stote-env';
-import { Workshop, WorkshopModel } from '../workshop/workshop';
+import { Workshop, WorkshopModel, WorkshopSnapshot } from '../workshop/workshop';
 
 const PageParams = types.model({
   _page: types.maybe(types.number),
@@ -16,6 +16,9 @@ const Pagination = types.model({
   prev: types.maybe(PageParams),
 })
 
+/**
+ * Store for catalog state
+ */
 export const CatalogStoreModel = types
   .model('CatalogStore')
   .props({
@@ -37,15 +40,18 @@ export const CatalogStoreModel = types
     },
     setPagination: (pagination?: Instance<typeof Pagination>) => {
       self.pagination = pagination;
-    }
+    },
+    applySnapshot: (workshopSnapshot: WorkshopSnapshot[]) => {
+      applySnapshot(self.workshops, workshopSnapshot);
+    },
   }))
   .actions((self) => ({
     getWorkshops: async (page?: number, limit?: number) => {
-      const api = new WorkshopApi(self.environment.api);
+      const api = new WorkshopApi(self.environment.api);     
       const result = await api.getWorkshops({
         _page: page || 1,
         _limit: limit,
-        category: self.category,
+        category: self.category,  
       });
 
       if (result.kind === 'ok') {

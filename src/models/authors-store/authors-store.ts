@@ -3,6 +3,9 @@ import { UsersApi } from '../../services/api/user-api';
 import { withStoreEnv } from '../extentions/with-stote-env';
 import { User, UserModel } from '../user/user';
 
+/**
+ * Store for users
+ */
 export const AuthorsStoreModel = types
   .model('AuthorsStore')
   .props({

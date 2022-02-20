@@ -30,7 +30,7 @@ Also add workflow to build images and update deployed stack on swarm
 > Will run app and mock-backend-server concurrently with one log output
 ## P.S.
 
-Developers always have huge amounts of silly questions ;) , like: "How does that has to work?", "How do you want to display this thing?", etc. So am I: about carts, do cart items have to be merged or added separately, how the back btn will work on a deeper page (similar workshops), animations, other minor stuff, so I implement all questionable things in my way (not necessarily correct ;) ).Some things like overlays and screenlock I add as opt-in/opt-out props to components.
+Developers always have huge amounts of silly questions ;) , like: "How does that has to work?", "How do you want to display this thing?", etc. So am I: about carts, do cart items have to be merged or added separately, how the back btn will work on a deeper page (similar workshops), animations, other minor stuff, so I implement all questionable things in my way (not necessarily correct ;) ).
 
 Some things like overlays and screenlock I add as opt-in/opt-out props to components.
 

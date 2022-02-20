@@ -1,14 +1,14 @@
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import iconCalend from '../../assets/icons/ic-calendar.svg';
+import iconTime from '../../assets/icons/ic-time.svg';
 import { Workshop } from '../../models/workshop/workshop';
 import { colors } from '../../resources/colors';
 import { device } from '../../resources/values';
 import useWindowWidth from '../../utils/useWindowWidth';
 import AddToCart from '../add-to-cart/AddToCart';
 import AddToCartMobile from '../add-to-cart/AddToCartMobile';
-import iconCalend from '../../assets/icons/ic-calendar.svg';
-import iconTime from '../../assets/icons/ic-time.svg';
 import Icon from '../icon/Icon';
 
 const WorkshopImage = styled.div`

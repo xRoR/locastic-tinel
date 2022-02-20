@@ -93,13 +93,13 @@ const CartItem: React.FC<{ item: Workshop }> = observer(({ item }) => {
   }
 
   return (
-    <ItemWrapper>
+    <ItemWrapper role="listitem">
       <ItemImage style={{ backgroundImage: `url(${item.imageUrl})` }} />
       <ItemBody>
 
         <ItemHeader>
           <ItemTitle>{_renderTitle()}</ItemTitle>
-          <Delete onClick={removeItem}/>
+          <Delete title="Remove item fron cart" onClick={removeItem}/>
         </ItemHeader>
 
         <ItemDetails>
