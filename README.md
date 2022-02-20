@@ -22,6 +22,13 @@ I use docker swarm + traefik proxy, it`s quick and easy solution. But I can depl
 - Github Actions:
 Also add workflow to build images and update deployed stack on swarm
 
+## Tests
+
+- Jest:
+Add some test for model, component and observed component
+
+- Github Actions:
+Add test step to gitlab workflow
 
 ## Run locally
 
